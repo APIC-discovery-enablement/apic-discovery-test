@@ -1,0 +1,83 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: User api
+  x-ibm-name: user-api
+basePath: /
+x-ibm-configuration:
+  properties:
+    target-url:
+      value: https://jsonplaceholder.typicode.com
+      description: URL of the proxy policy
+      encoded: false
+  cors:
+    enabled: true
+  gateway: datapower-api-gateway
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  assembly:
+    execute:
+      - invoke:
+          title: invoke
+          version: 2.0.0
+          verb: keep
+          target-url: $(target-url)/$(request.path)
+          follow-redirects: false
+          timeout: 60
+          parameter-control:
+            type: blocklist
+            values: []
+          header-control:
+            type: blocklist
+            values: []
+          inject-proxy-headers: true
+          persistent-connection: true
+      - parse:
+          version: 2.1.0
+          title: parse
+          parse-settings-reference:
+            default: apic-default-parsesettings
+          use-content-type: true
+      - redact:
+          version: 2.0.0
+          title: redact
+          redactions:
+            - action: redact
+              path: message.body."email"
+            - action: redact
+              path: message.body."phone"
+            - action: redact
+              path: message.body."name"
+          root: ''
+    finally: []
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+paths:
+  /users/{userid}:
+    get:
+      responses:
+        '200':
+          description: success
+          schema:
+            type: string
+      consumes: []
+      produces: []
+      parameters:
+        - name: userid
+          required: true
+          in: path
+          type: string
+    parameters: []
+securityDefinitions:
+  clientID:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+security:
+  - clientID: []
+schemes:
+  - https
