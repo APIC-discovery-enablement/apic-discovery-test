@@ -1,7 +1,6 @@
 name: Sync Discovered API with ApiConnect
 
-# on: [pull_request, workflow_dispatch, push]
-on: []
+on: [pull_request, workflow_dispatch, push]
 
 env:
   API_HOST: eu-central-a.apiconnect.automation.ibm.com
