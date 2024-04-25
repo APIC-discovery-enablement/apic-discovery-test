@@ -3,9 +3,8 @@ name: Send Discovered API to ApiConnect
 on: [pull_request, workflow_dispatch, push]
 
 env:
-  #API_HOST: us-east-a.apiconnect.automation.ibm.com
-  API_HOST: eu-west-a.apiconnect.automation.ibm.com
-  PROVIDER_ORG: acme-coffee-roasters
+  API_HOST: eu-central-a.apiconnect.automation.ibm.com
+  PROVIDER_ORG: tech-sales
   #API_FILES: gmail-api.json,mit-api.json,APIfolderTwo/echo-api.json
   API_FOLDERS: APIfolder,APIfolderTwo
 
