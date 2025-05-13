@@ -11,7 +11,7 @@ env:
   
 jobs:
   check_changes_job:
-    runs-on: 'ubuntu-20.04'
+    runs-on: 'ubuntu-24.04'
     # Declare outputs for next jobs
     outputs:
       action_changed: ${{ steps.check_workflow_changed.outputs.action_updates }}
